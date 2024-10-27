@@ -1,0 +1,13 @@
+.DS_Store
+launch.json
+
+# individual files
+.python-version
+poetry.lock
+.env
+
+# directories
+secrets
+local_files
+crawled_data
+crawled_metadata

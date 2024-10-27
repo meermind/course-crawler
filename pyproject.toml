@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "course-crawler"
+version = "0.1.0"
+description = ""
+authors = ["datagero <datagero@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.32.3"
+beautifulsoup4 = "^4.12.3"
+selenium = "^4.25.0"
+scrapy = "^2.11.2"
+dl-coursera = "^0.1.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,4 +1,7 @@
 .DS_Store
+__pycache__
+
+# IDE
 launch.json
 
 # individual files
@@ -8,6 +11,8 @@ poetry.lock
 
 # directories
 secrets
+outputs
+tmp
 local_files
 crawled_data
 crawled_metadata

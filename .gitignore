@@ -10,9 +10,11 @@ poetry.lock
 .env
 
 # directories
+storage
 secrets
 outputs
 tmp
 local_files
 crawled_data
 crawled_metadata
+rawtext_data

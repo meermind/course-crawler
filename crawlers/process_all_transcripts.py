@@ -2,6 +2,7 @@ import os
 import json
 import argparse
 import logging
+import re
 from pathlib import Path
 from transcript_formatter import parse_srt, generate_json_format, generate_txt_format
 
@@ -47,8 +48,17 @@ def process_all_transcripts(metadata_file, output_base_dir):
                         transcript_path = content['path']
                         logger.debug(f"Processing transcript: {transcript_path}")
 
-                        # Parse the transcript and generate outputs
-                        segments = parse_srt(transcript_path)
+                        if transcript_path.endswith('srt'):
+                            # Parse the transcript and generate outputs
+                            segments = parse_srt(transcript_path)
+                        elif transcript_path.endswith('txt'):
+                            # Parse the transcript and generate outputs
+                            with open(transcript_path, 'r', encoding='utf-8') as f:
+                                segments = []
+                                for line in f.readlines():
+                                    # Remove the initial timestamp using regex
+                                    stripped_text = re.sub(r'^\d{1,2}:\d{2}\s*', '', line.strip())
+                                    segments.append({"text": stripped_text})
 
                         output_path = create_output_path(
                             output_base_dir, course_slug, module_slug, lesson_slug, item_slug
@@ -68,17 +78,30 @@ def process_all_transcripts(metadata_file, output_base_dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process and format transcripts from metadata.")
+    # parser.add_argument(
+    #     '--metadata_file',
+    #     type=str,
+    #     default="crawled_metadata/dl_coursera/uol-cm2025-computer-security.json",
+    #     help="Path to the metadata JSON file containing the transcript information."
+    # )
+    # parser.add_argument(
+    #     '--output_base_dir',
+    #     type=str,
+    #     default='outputs/structured_transcripts/dl_coursera',
+    #     help="Base directory to store structured transcripts (default: outputs/structured_transcripts/dl_coursera)."
+    # )
+
     parser.add_argument(
         '--metadata_file',
         type=str,
-        default="crawled_metadata/dl_coursera/uol-cm2025-computer-security.json",
+        default="crawled_metadata/deeplearning/intro-to-federated-learning.json",
         help="Path to the metadata JSON file containing the transcript information."
     )
     parser.add_argument(
         '--output_base_dir',
         type=str,
-        default='outputs/structured_transcripts/dl_coursera',
-        help="Base directory to store structured transcripts (default: outputs/structured_transcripts/dl_coursera)."
+        default='outputs/structured_transcripts/deeplearning',
+        help="Base directory to store structured transcripts (default: outputs/structured_transcripts/deeplearning)."
     )
 
     args = parser.parse_args()

@@ -85,8 +85,6 @@ python crawlers/dl_coursera/standardize_metadata.py \
 }
 ```
 
-Here’s a concise section focusing on **Transcript Processing**:
-
 ---
 
 ## **Transcript Processing**

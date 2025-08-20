@@ -54,7 +54,7 @@ def parse_course(course_path):
                 item_name = item_name_raw.replace("-", " ").title()
                 item_full_slug = f"{item_slug_id}@{item_name_raw}"
 
-                # Look for transcript files in the item directory
+                # Collect content within the item directory
                 content = []
                 for file_name in sorted(os.listdir(item_path)):
                     file_path = os.path.join(item_path, file_name)
@@ -74,6 +74,28 @@ def parse_course(course_path):
                             "size": os.path.getsize(file_path),
                             "extension": ".mp4"
                         })
+                    elif file_name.lower() == "slides.pdf":
+                        content.append({
+                            "content_type": "slides",
+                            "file_name": file_name,
+                            "path": file_path,
+                            "size": os.path.getsize(file_path),
+                            "extension": ".pdf"
+                        })
+
+                # Collect extra notes from optional subfolder "extra-notes" (e.g., .md files)
+                notes_dir = os.path.join(item_path, "extra-notes")
+                if os.path.isdir(notes_dir):
+                    for file_name in sorted(os.listdir(notes_dir)):
+                        if file_name.endswith(".md"):
+                            file_path = os.path.join(notes_dir, file_name)
+                            content.append({
+                                "content_type": "extra-notes",
+                                "file_name": file_name,
+                                "path": file_path,
+                                "size": os.path.getsize(file_path),
+                                "extension": ".md"
+                            })
 
                 # Build item metadata
                 items.append({

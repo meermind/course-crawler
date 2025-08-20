@@ -1,0 +1,24 @@
+{
+  "slug": "sample-course",
+  "name": "Sample Course",
+  "modules": [
+    {
+      "slug": "intro-module",
+      "name": "Introduction",
+      "lessons": [
+        {
+          "slug": "lesson-one",
+          "name": "Lesson One",
+          "items": [
+            {
+              "slug": "getting-started",
+              "name": "Getting Started"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+

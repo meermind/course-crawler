@@ -1,22 +1,29 @@
-[tool.poetry]
+[project]
 name = "course-crawler"
 version = "0.1.0"
 description = ""
-authors = ["datagero <datagero@outlook.com>"]
 readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "datagero", email = "datagero@outlook.com" }]
+dependencies = [
+    "requests>=2.32.3,<3",
+    "beautifulsoup4>=4.12.3,<5",
+    "selenium>=4.25.0,<5",
+    "scrapy>=2.11.2,<3",
+    "dl-coursera>=0.1.2,<0.2",
+    "pypdf2>=3.0.1,<4",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-requests = "^2.32.3"
-beautifulsoup4 = "^4.12.3"
-selenium = "^4.25.0"
-scrapy = "^2.11.2"
-dl-coursera = "^0.1.2"
-
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.3.3"
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3,<9",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "crawlers",
+]

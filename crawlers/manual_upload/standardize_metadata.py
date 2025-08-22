@@ -58,15 +58,17 @@ def parse_course(course_path):
                 content = []
                 for file_name in sorted(os.listdir(item_path)):
                     file_path = os.path.join(item_path, file_name)
-                    if file_name.endswith(".txt"):
+                    lower_name = file_name.lower()
+                    if lower_name.endswith((".txt", ".srt")):
+                        ext = os.path.splitext(file_name)[1].lower()
                         content.append({
                             "content_type": "transcript",
                             "file_name": file_name,
                             "path": file_path,
                             "size": os.path.getsize(file_path),
-                            "extension": ".txt"
+                            "extension": ext
                         })
-                    elif file_name.endswith(".mp4"):
+                    elif lower_name.endswith(".mp4"):
                         content.append({
                             "content_type": "video",
                             "file_name": file_name,
@@ -74,7 +76,7 @@ def parse_course(course_path):
                             "size": os.path.getsize(file_path),
                             "extension": ".mp4"
                         })
-                    elif file_name.lower() == "slides.pdf":
+                    elif lower_name == "slides.pdf":
                         content.append({
                             "content_type": "slides",
                             "file_name": file_name,
@@ -87,14 +89,16 @@ def parse_course(course_path):
                 notes_dir = os.path.join(item_path, "extra-notes")
                 if os.path.isdir(notes_dir):
                     for file_name in sorted(os.listdir(notes_dir)):
-                        if file_name.endswith(".md"):
+                        lower_name = file_name.lower()
+                        if lower_name.endswith((".md", ".txt", ".pdf")):
                             file_path = os.path.join(notes_dir, file_name)
+                            ext = os.path.splitext(file_name)[1].lower()
                             content.append({
                                 "content_type": "extra-notes",
                                 "file_name": file_name,
                                 "path": file_path,
                                 "size": os.path.getsize(file_path),
-                                "extension": ".md"
+                                "extension": ext
                             })
 
                 # Build item metadata
